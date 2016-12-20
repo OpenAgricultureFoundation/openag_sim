@@ -1,0 +1,53 @@
+//****************************************
+//  Copyright (c) 2003 LIAMA
+//  File name: Draw_SMB
+//  Author: Kang Mengzhen   Version: 1.0   Date: 2003-6-20
+//  Draw an organ 
+//  Input: xyz position of P points, number of faces, number of points in each face and their index, L-Scale, O-Origin
+//  V-Roatation matrix,C-color
+//  History:
+//  Author           time        version     description
+//  Kang Mengzhen   
+//****************************************
+function [X,Y,Z,CP]=Draw_SMB_new(P,nbfaces,Faces) 
+
+//X=[];Z=[];Y=[];CP=[];
+X=list();Z=list();Y=list();CP=list();//they are lists to save facets of different number of points
+
+NP=[];//different number of points in this smb;some smb an contain facet of four, or 9 points
+
+if size(P)>0 then
+   
+   for i = 1:nbfaces   		//for each face i in the smb
+   
+      np=Faces(i)(1); 			//number of points in face i 
+           
+      x = zeros(1,np);y = zeros(1,np);z = zeros(1,np);    //x,y,z are xyz position of np poitns in this face   
+      for j = 1:np	                 //for each point j in face i
+         n = Faces(i)(2)(j)+1;     //n is the index of point j      
+         x(j) = P(1,n);             //get x-position of j-th point
+         y(j) = P(2,n);			//get y-position of j-th point
+         z(j) = P(3,n);			//get z-position of j-th point
+      end   
+      x=real(x);y=real(y);z=real(z);
+      x=x';      y=y';      z=z';      
+      
+      if i==1 then
+        NP=[np];
+      end
+      
+      class=find(NP==np);//indice of np in vectror NP
+      
+      if class>0 //such number of points has already exist        
+        choice=class;
+        X(choice)=[X(choice) x];Y(choice)=[Y(choice) y];Z(choice)=[Z(choice) z];CP(choice)=[CP(choice) addcolor(C)];
+      else //a new class of facets
+        NP=[NP np]; 
+        choice=length(NP);
+        X(choice)=x;Y(choice)=y;Z(choice)=z;CP(choice)= addcolor(C);
+      end
+   end  
+   
+end
+
+endfunction
