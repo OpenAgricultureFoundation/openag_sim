@@ -1,0 +1,75 @@
+//---------------------Control_Parameters_on_Fitting---------------------
+//OrganType(id)--------Blade-Petiel-Internode-FemaleFlower-MaleFlower-Ring-Root
+Time_Expansion(c_t_exp) 0 0 0 0 0 0 0
+Para_a(c_Bt_a) 0 0 0 0 0 0 0
+Para_b(c_Bt_b) 1 1 1 1 0 0 0
+    
+Sink_Blade(c_S_B)     0 0 0 0 0 0
+Sink_Petiole(c_S_P)    1 0 0 0 0 0
+Sink_Internode(c_S_I) 1 0 0 0 0 0
+Sink_Female(c_S_Ff)  1 0 0 0 0 0
+Sink_Male(c_S_Fm)  0 0 0 0 0 0
+Sink_Layer(c_S_L)     0 0 0 0 0 0
+Sink_Root(c_S_R)      0 0 0 0 0 0
+  
+Allom_Internode(c_a_bI) 0 0 0 0 0 0
+(c_a_aI)                0 0 0 0 0 0
+Allom_Petiole(c_a_bP)    0 0 0 0 0 0
+(c_a_aP)                0 0 0 0 0 0
+Allom_Thick(c_Th_B)     0 0 0 0 0 0
+Female_Density(c_Den_Ff) 0 0 0 0 0 0
+Male_Density(c_Den_Fm) 0 0 0 0 0 0
+Internode_Dens(c_Den_I) 0 0 0 0 0 0
+  
+Resist_Blade(c_r_B)      0
+Resist_Petiole(c_r_P)     0
+Projected_area(c_Sp)     0
+Beer_law(c_rp)           1
+Beer_law(c_kp)           1
+  
+Resist_Root(c_r_R)       0
+Seed_Biomass(c_Q0)       0
+Flow_Biomass(c_dQ0)      0
+  
+//TargetFlag(C_Tar)  
+WeightRoot(Q_R)      0
+WeightBlade(Q_B)     1 0 0 0 0 0  
+WeightPetiole(Q_P)   1 0 0 0 0 0 
+WeightInternode(Q_I) 1 0 0 0 0 0
+WeightFemale(Q_Ff)   1 0 0 0 0 0
+WeightMale(Q_Fm)     1 0 0 0 0 0
+AreaInternode(S_B)   0 0 0 0 0 0
+HeightInternode(S_I) 0 0 0 0 0 0
+AreaBlade(H_I)       0 0 0 0 0 0
+
+
+//**********************Target*data***************************
+NumberPlant(NumPlt)  1
+
+InfoPlant(CA,PA,LoD) 33 1 0
+Root(Q_R)  -1
+InfoAxis(ID,PA,CA)  0  1  33 1
+//-GU--NbSub--IDSub--Q_B--Q_P--Q_I--Q_Ff--Q_Fm-S_B--S_I--H_I- 
+GU	1	0	-1	0.09	0.09	2.01	0	0	5.7	2.01	0.65
+GU	2	0	-1	0.23	0.19	2.01	0	0	12.8	2.01	0.65
+GU	3	0	-1	0.41	0.34	2.01	0	0	14.34	2.01	0.65
+GU	4	0	-1	1.03	0.95	2.01	0	0	45.26	2.01	0.65
+GU	5	0	-1	4.5	2.75	2.01	0	0	178.38	2.01	0.65
+GU	6	0	-1	8.22	7.76	26.23	0	0	315.23	26.23	3.73
+GU	7	0	-1	11.46	10.29	44.21	0	0	409.82	44.21	6.33
+GU	8	0	-1	15.46	13.23	52.53	0	0	535.42	52.53	8.88
+GU	9	0	-1	19.78	15.26	53.34	0	0	670.34	53.34	10.43
+GU	10	0	-1	23.58	16.24	50.71	0	0	792.32	50.71	11.75
+GU	11	0	-1	26.45	17.17	44.32	0	0	908.06	44.32	12.73
+GU	12	0	-1	28.38	17.63	39.92	0	0	977.94	39.92	13.75
+GU	13	0	-1	28.11	17.25	34.48	0	0	1007.87	34.48	14.18
+GU	14	0	-1	26.75	17.14	26.82	0	0	987.71	26.82	14.58
+GU	15	0	-1	24.77	15.84	20.86	895.4	0	912.65	20.86	14.2
+GU	16	0	-1	22.22	14.36	16.2	0	0	855.31	16.2	14.23
+GU	17	0	-1	18.86	12.42	12.43	0	0	739.27	12.43	14.55
+GU	18	0	-1	14.35	10.1	8.94	0	0	597.45	8.94	14.08
+GU	19	0	-1	9.25	7.65	6.7	0	0	421.99	6.7	14.48
+GU	20	0	-1	4.18	3.99	3.88	0	0	205.85	3.88	11.53
+GU	21	0	-1	0.2	1.12	1.11	0	29.11	9.11	1.11	-1
+
+end
