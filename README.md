@@ -31,7 +31,7 @@ This is the procedure to follow if you want to re-download and re-process data f
 	* The parameter file for five stages of cotton growth is included in this repository as Software/GreenScilabV0.9/parafiles/cotton_5stages.sci
 * You should have output files that look like this:
 
-![alt tag](https://raw.githubusercontent.com/OpenAgInitiative/openag_sim/Data/images/greenlab_sim_output.png)
+![alt tag](https://github.com/OpenAgInitiative/openag_sim/blob/master/Data/images/greenlab_sim_output.png?raw=true)
 
 
 
