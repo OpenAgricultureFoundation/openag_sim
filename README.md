@@ -48,6 +48,9 @@ This is the procedure to follow if you want to re-download and re-process data f
 
 * Name the resultant .json ‘latLongValData.json’ and place it in a directory with the visualization files. Reload visualization. Done!
 * [Integration with OpenAg repository TBD—currently the visualization is in Elena’s personal github.]
+	* [Code](https://github.com/elenapolozova/openag-sim-viz)
+	* [View](https://elenapolozova.github.io/openag-sim-viz/)
+
 
 
 
