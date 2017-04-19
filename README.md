@@ -29,9 +29,25 @@ This is the procedure to follow if you want to re-download and re-process data f
 * Run command ‘exec(“fun1.sci”)’ to have access to the prewritten simulator function.
 * Run command ‘fun1(“path to parameter file”, “path to folder with batch of desired .dat files/*.dat”, “path to desired output directory”)’
 	* The parameter file for five stages of cotton growth is included in this repository as Software/GreenScilabV0.9/parafiles/cotton_5stages.sci
-* You should have output files that look like this:
+* You should have output files that look like this (five from each simulation):
 
 ![alt tag](https://github.com/OpenAgInitiative/openag_sim/blob/master/Data/images/greenlab_sim_output.png?raw=true)
+
+### Visualizing simulator output
+
+#### Converting simulation output to visualization input
+
+*Known issue: this process only creates 1690 (coordinate, value, weather station) tuples, rather than the ~2500 that were simulated and are listed in referenceFile.txt. This is probably due to the prefix-removal section of the code.*
+
+* run create_viz_input.py with the following command line arguments:
+	* ‘—-dir’, default = ‘EPW’: point the script to the original directory with scraped EPW data (it looks here to get weather station names)
+	* ‘—-referencefile’, default = ‘../Data/output/referenceFile.txt’: location of referenceFile.txt that was output from the simulations
+	* ‘output’, default='latLongValData.json’: specify target file for writing formatted data. 
+
+#### Generating visualization
+
+* Name the resultant .json ‘latLongValData.json’ and place it in a directory with the visualization files. Reload visualization. Done!
+* [Integration with OpenAg repository TBD—currently the visualization is in Elena’s personal github.]
 
 
 
