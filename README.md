@@ -35,7 +35,7 @@ This is the procedure to follow if you want to re-download and re-process data f
 
 ## Visualizing simulator output
 
-#### Converting simulation output to visualization input
+### Converting simulation output to visualization input
 
 *Known issue: this process only creates 1690 (coordinate, value, weather station) tuples, rather than the ~2500 that were simulated and are listed in referenceFile.txt. This is probably due to the prefix-removal section of the code.*
 
@@ -44,7 +44,7 @@ This is the procedure to follow if you want to re-download and re-process data f
 	* ‘—-referencefile’, default = ‘../Data/output/referenceFile.txt’: location of referenceFile.txt that was output from the simulations
 	* ‘output’, default='latLongValData.json’: specify target file for writing formatted data. 
 
-#### Generating visualization
+### Generating visualization
 
 * Name the resultant .json ‘latLongValData.json’ and place it in a directory with the visualization files. Reload visualization. Done!
 * [Integration with OpenAg repository TBD—currently the visualization is in Elena’s personal github.]
