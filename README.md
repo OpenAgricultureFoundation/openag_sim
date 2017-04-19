@@ -1,6 +1,6 @@
 # openag_sim
 
-## How to simulate:
+## Simulating
 
 ### Prerequisites
 
@@ -33,7 +33,7 @@ This is the procedure to follow if you want to re-download and re-process data f
 
 ![alt tag](https://github.com/OpenAgInitiative/openag_sim/blob/master/Data/images/greenlab_sim_output.png?raw=true)
 
-### Visualizing simulator output
+## Visualizing simulator output
 
 #### Converting simulation output to visualization input
 
