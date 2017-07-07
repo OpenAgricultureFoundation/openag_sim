@@ -58,7 +58,6 @@ def retrieve_data(url, path):
 
 def download_file(url):
 
-    print url
     req = urllib2.Request(url, headers={'User-Agent': "Mozilla/5.0"})
     zipresp = urllib2.urlopen(req)
 
@@ -89,7 +88,7 @@ def display_downloading_info(data, count, size):
     Country = data[1]
     Location = data[2]
 
-    print "Downloading: " ID + " " + Country + " - " + Location
+    print "Downloading: " + ID + " " + Country + " - " + Location
     print "File: " + str(count) + "/" + str(size)
 
 
