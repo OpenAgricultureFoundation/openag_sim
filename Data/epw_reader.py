@@ -61,10 +61,19 @@ def outputParameter(colx, coly, colz, new_path, filename):
 
 
 def reader(input_directory):
+
+    ReadingsPerDay = 24
+    NumberOfGrowthCycles = 40
+    NumberOfDaysPerGrowthCycle = 8
+
+    # This represents the plantation date of the experiment
+    # In case of cotton it is February 1st
+    StartingDateForExperiment = 753
+    FinishgDateForExperiment = StartingDateForExperiment + \
+        ((NumberOfGrowthCycles * NumberOfDaysPerGrowthCycle) * ReadingsPerDay)
+
     for elt in os.listdir(input_directory):
-
         fileName = elt[:-4]
-
         if not (elt.endswith(".epw")):
             continue
         with open(input_directory + "/" + elt, "rb") as csvfile:
@@ -77,25 +86,24 @@ def reader(input_directory):
             radiationAvg = []
             temperatureAvg = []
 
-            start = 753
-
             for eltx in weatherFile:
                 counter = counter + 1
                 # if counter==19:
                 # Access the header for the relavent info
-                if counter >= start and counter <= 7680 + start:
-                    # index 3 is for temperature
-                    # index -2 is for rain
-                    # index 8 is for vertical radiation
-
+                if counter >= StartingDateForExperiment and\
+                   counter <= FinishgDateForExperiment:
+                    # Dry Bulb Temperature Field
                     temperature.append(float(eltx[6]))
+                    # Global Horizontal Radiation
                     radiation.append(float(eltx[14]))
+                    # Liquid Precipitation Depth
                     rain.append(float(eltx[33]))
 
-            # Calculate averages per sections of growth, will be divided
+            # Calculate averages per growth cycle
+            # The total growth time for cotton is 320 days
             sequence = []
-            for x in range(40):
-                sequence.append(8)
+            for x in range(NumberOfGrowthCycles):
+                sequence.append(NumberOfDaysPerGrowthCycle)
 
             averager(rainAvg, sequence, rain, True)
             averager(radiationAvg, sequence, radiation, False)
