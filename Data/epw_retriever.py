@@ -19,8 +19,14 @@ def strip_accents(s):
 
 
 def path_creator(data, legend):
+
     absolute_path = absolute_path_generator(data, legend)
-    mkdir_p(absolute_path)
+
+    try:
+        mkdir_p(absolute_path)
+    except:
+        raise
+
     return absolute_path
 
 
@@ -31,9 +37,30 @@ def absolute_path_generator(field_list, legend):
     index_station_name = legend.index('station_name')
     index_data_source = legend.index('data_source')
 
+    Detail = len(field_list[index_station_name].split("."))
+
+    Prefecture = ''
+    Province = ''
+    City = ''
+
+    if (Detail == 1):
+        Prefecture = strip_accents(
+            field_list[index_station_name].split(".")[0])
+    elif (Detail == 2):
+        Prefecture = strip_accents(
+            field_list[index_station_name].split(".")[0])
+        Province = strip_accents(field_list[index_station_name].split(".")[1])
+    else:
+        Prefecture = strip_accents(
+            field_list[index_station_name].split(".")[0])
+        Province = strip_accents(field_list[index_station_name].split(".")[1])
+        City = strip_accents(field_list[index_station_name].split(".")[2])
+
     relative_path = type_of_data + "/" +\
         field_list[index_country] + "/" +\
-        strip_accents(field_list[index_station_name].split(".")[0]) + "/" +\
+        Prefecture + "/" +\
+        Province + "/" +\
+        City + "/" +\
         field_list[index_data_source]
 
     absolute_path = os.getcwd() + "/" + relative_path
@@ -46,8 +73,6 @@ def mkdir_p(path):
         os.makedirs(path)
     except OSError as exc:
         if exc.errno == errno.EEXIST and os.path.isdir(path):
-            pass
-        else:
             raise
 
 
@@ -85,10 +110,7 @@ def uncompress_file(directory):
 def display_downloading_info(data, count, size):
 
     ID = data[0]
-    Country = data[1]
-    Location = data[2]
-
-    print "Downloading: " + ID + " " + Country + " - " + Location
+    print "Downloading: " + ID
     print "File: " + str(count) + "/" + str(size)
 
 
@@ -99,20 +121,23 @@ def epw_retriever(args):
     epw_file_index = list_weather_files[0].split(",")
     epw_file_list = list_weather_files[1:]
 
-    reload(sys)
-    sys.setdefaultencoding("utf-8")
-
     for idx, epw_file in enumerate(epw_file_list):
         if epw_file_list[-1] == epw_file:
             break
 
         data = epw_file.split(",")
-        path = path_creator(data, epw_file_index)
 
-        url = data[epw_file_index.index('http_link')]
-        retrieve_data(url, path)
+        try:
+            path = path_creator(data, epw_file_index)
+            url = data[epw_file_index.index('http_link')]
+            retrieve_data(url, path)
+            display_downloading_info(data, idx, len(epw_file_list))
 
-        display_downloading_info(data, idx, len(epw_file_list))
+        except KeyboardInterrupt:
+            sys.exit()
+
+        except:
+            print data[0] + " This file is already in the directory structure "
 
 if __name__ == '__main__':
     epw_retriever(sys.argv)

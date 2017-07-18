@@ -1,6 +1,7 @@
 import sys
 import csv
 import os
+import os.path
 
 # Recall that growth cycle is dependent on cumulated thermal temperature
 # According to cotton.org this requires from 2200-2600 "heat units" for full growth
@@ -59,12 +60,10 @@ def outputParameter(colx, coly, colz, new_path, filename):
         f.write("\n")
 
 
-def reader(args):
-    input_directory = str(args[1])
-
+def reader(input_directory):
     for elt in os.listdir(input_directory):
+
         fileName = elt[:-4]
-        print fileName
 
         if not (elt.endswith(".epw")):
             continue
@@ -74,11 +73,12 @@ def reader(args):
             rain = []
             radiation = []
             temperature = []
-            start = 753
-
             rainAvg = []
             radiationAvg = []
             temperatureAvg = []
+
+            start = 753
+
             for eltx in weatherFile:
                 counter = counter + 1
                 # if counter==19:
@@ -103,6 +103,7 @@ def reader(args):
 
             # Scale water to the portions found in input files
             noneBogus = []
+
             for elt in rain:
                 if (int(elt) != 999):
                     noneBogus.append(elt)
@@ -122,5 +123,29 @@ def reader(args):
             outputParameter(newRainAvg, temperatureAvg,
                             radiationAvg, input_directory, fileName)
 
+
+def nesting(path):
+    """ counts how often `os.path.split` works on `path` """
+    c = 0
+    head = tail = path
+    while head and tail:
+        head, tail = os.path.split(head)
+        c += 1
+    return c
+
+
+def longest_path(paths):
+    return max(paths, key=nesting)
+
 if __name__ == '__main__':
-    reader(sys.argv)
+
+    search_path = str(sys.argv[1])
+    lowest_dirs = []
+
+    for root, dirs, files in os.walk(search_path):
+        if not dirs:
+            lowest_dirs.append(root)
+
+    for current_dir in lowest_dirs:
+        print 'Processing: ' + current_dir
+        reader(current_dir)
