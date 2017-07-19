@@ -2,40 +2,49 @@ import sys
 import csv
 import os
 import json  # for outputting location info nicely
-from pprint import pprint
 import argparse
-from matplotlib import pyplot as plt
+
+parser = argparse.ArgumentParser()
+
+# Directory where the original EPW files are located
+parser.add_argument('--dir',
+                    default='EPW')
+# Full path to the reference file
+parser.add_argument('--referencefile',
+                    default='referenceFile.txt')  # later mod
+# Parameter to obtain
+parser.add_argument('--parameter',
+                    default='LeafAreaIdex')
+# Format of the output data
+parser.add_argument('--format', default='csv')
+# Output filename
+parser.add_argument('--output', default='output.csv')  # later mod
+
+
+def csv_writer(filename):
+    writer = csv.writer(filename, dialect='excel')
+    for row in output:
+        writer.writerow(row)
 
 
 def get_location(input_directory):
     epw = filter(lambda fname: fname.endswith(
         ".epw"), os.listdir(input_directory))[0]
-    #print("EEEEEEEEEE", epw)
+
     with open(input_directory + "/" + epw, "rb") as csvfile:
         weatherFile = csv.reader(csvfile)
         tup = next(weatherFile)
         return epw[:-4], tup[6], tup[7]
-    # return
+
     for elt in os.listdir(input_directory):
-        fileName = elt[:-4]
-        # print fileName
         if not (elt.endswith(".epw")):
             continue
         with open(input_directory + "/" + elt, "rb") as csvfile:
             weatherFile = csv.reader(csvfile)
-            # print next(weatherFile)
 
-
-parser = argparse.ArgumentParser()
-parser.add_argument('--dir', default='EPW')
-parser.add_argument('--referencefile',
-                    default='referenceFile.txt')  # later mod
-parser.add_argument('--output', default='latLongValData.json')  # later mod
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    # Elena's modification: get paths to all directories that contain the .epw
-    # file
     lowest_dirs = list()
 
     for root, dirs, files in os.walk(args.dir):
@@ -52,41 +61,26 @@ if __name__ == '__main__':
             if bogusname.endswith(fname):
                 no_by_fname[fname] = no
 
-    # pprint(no_by_fname)
     output = []
     max_out = 0
+    base_dir = os.path.dirname(args.referencefile)
+
     for fname, (lat, lon) in lat_lon_by_fname.items():
         try:
-            f = open('./RES/%sLeafAreaIndex.sci' % no_by_fname[fname])
+            f = open(base_dir +
+                     '/%s' % no_by_fname[fname] +
+                     '%s' % args.parameter + '.sci')
             val = float(f.read().split("\n")[-2])
             output.append([lat, lon, val, fname])
             max_out = max(max_out, val)
         except IOError:
             pass
 
-    # output = [(lat, lon, val / max_out) for lat, lon, val in output] # pre messing-with normalizing data, it was this
-    #output = [(lat, lon, val) for lat, lon, val in output]
+    # Open Output file
+    output_file = open(args.output, 'w+')
 
-    #vals = [v for lat, lon, v in output]
-    #plt.hist(vals, bins=100)
-    # plt.show()
-
-    # uncomment this when done trying to figure out how to normalize
-    json.dump(output, open(args.output, 'w+'))
-
-    #(lat, lon): float(open(dfname).read().splitlines()[-2]) for dfname, (lat, lon) in }
-
-    # pprint(lat_lon_by_fname)
-    """
-    for d in lowest_dirs:
-        #reader(d) # this if want to "read" the epw files. else
-
-        # 3/30/17 get locations
-
-        fname, lat, lon = get_location(d)
-        print(fname, lat, lon)
-
-        """
-
-    # below is what is used to do
-    # reader(sys.argv)
+    # Write results
+    if(args.format == 'json'):
+        json.dump(output, output_file)
+    elif(args.format == 'csv'):
+        csv_writer(output_file)
